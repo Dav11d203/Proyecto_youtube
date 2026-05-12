@@ -1,0 +1,94 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               String       @id @default(uuid())
+  username         String       @unique
+  email            String       @unique
+  password         String
+  firstName        String
+  lastNamePaternal String
+  lastNameMaternal String
+  phone            String?
+  role             Role         @default(STUDENT)
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+  progress         Progress[]
+  submissions      Submission[]
+}
+
+model Progress {
+  id                 String   @id @default(uuid())
+  userId             String
+  courseId           String
+  completedLessons   String[] @default([])
+  totalLessons       Int      @default(0)
+  progressPercentage Int      @default(0)
+  lastAccessed       DateTime @default(now())
+  status             Status   @default(NOT_STARTED)
+  course             Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, courseId])
+}
+
+model Submission {
+  id        String   @id @default(uuid())
+  userId    String
+  techId    String
+  lessonId  String
+  fileUrl   String
+  status    String   @default("PENDING")
+  createdAt DateTime @default(now())
+  feedback  String?
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Course {
+  id              String     @id @default(uuid())
+  slug            String     @unique
+  name            String
+  description     String
+  longDescription String
+  level           String
+  image           String?
+  color           String?
+  badge           String?
+  glowColor       String?
+  learns          String[]
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+  lessons         Lesson[]
+  progress        Progress[]
+}
+
+model Lesson {
+  id        String   @id @default(uuid())
+  courseId  String
+  title     String
+  duration  String
+  youtubeId String
+  driveUrl  String?
+  type      String   @default("theory")
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+}
+
+enum Role {
+  ADMIN
+  STUDENT
+}
+
+enum Status {
+  NOT_STARTED
+  IN_PROGRESS
+  COMPLETED
+}

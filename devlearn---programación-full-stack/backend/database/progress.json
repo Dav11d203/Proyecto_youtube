@@ -1,0 +1,25 @@
+{
+  "student_progress": [
+    {
+      "userId": "user-001",
+      "courses": [
+        {
+          "courseId": "python",
+          "completedLessons": ["intro-python", "sintaxis-basica"],
+          "totalLessons": 15,
+          "progressPercentage": 13,
+          "lastAccessed": "2024-04-30T10:45:00Z",
+          "status": "IN_PROGRESS"
+        },
+        {
+          "courseId": "html",
+          "completedLessons": [],
+          "totalLessons": 10,
+          "progressPercentage": 0,
+          "lastAccessed": "2024-04-30T10:40:00Z",
+          "status": "NOT_STARTED"
+        }
+      ]
+    }
+  ]
+}

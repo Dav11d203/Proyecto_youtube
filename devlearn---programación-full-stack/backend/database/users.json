@@ -1,0 +1,20 @@
+{
+  "users": [
+    {
+      "id": "admin-001",
+      "username": "admin",
+      "email": "admin@codelearn.edu",
+      "password": "admin123_secure",
+      "role": "ADMIN",
+      "createdAt": "2024-04-30T10:00:00Z"
+    },
+    {
+      "id": "user-001",
+      "username": "estudiante_prueba",
+      "email": "pruebas@gmail.com",
+      "password": "estudiante_123",
+      "role": "STUDENT",
+      "createdAt": "2024-04-30T10:30:00Z"
+    }
+  ]
+}
